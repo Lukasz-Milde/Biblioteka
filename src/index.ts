@@ -18,5 +18,14 @@ class Book {
 }
 
 class Booking {
-	constructor(private user: string, private bookingDate: number) {}
+	private bookingDate: Date;
+	private returnDate: Date;
+	private rentedBooks: string[];
+	private lateFee: number;
+	private readonly FeePerDay: number = 5;
+
+	constructor(private user: string) {
+		this.bookingDate = new Date();
+		this.returnDate = 
+	}
 }
