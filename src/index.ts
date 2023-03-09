@@ -16,3 +16,7 @@ class Book {
 		private dupa: string
 	) {}
 }
+
+class Booking {
+	constructor(private user: string, private bookingDate: number) {}
+}
