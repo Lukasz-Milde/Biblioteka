@@ -6,15 +6,28 @@ class User {
 	) {}
 }
 
-class Book {
+interface BookType {
+	title: string;
+	author: string;
+	uuid: string;
+	randomPic: string;
+	description: string;
+}
+
+class Book implements BookType {
 	constructor(
-		private title: string,
-		private author: string,
-		private uuid: string,
-		private randomPic: string,
-		private description: string,
-		private dupa: string
-	) {}
+		public title: string,
+		public author: string,
+		public uuid: string,
+		public randomPic: string,
+		public description: string
+	) {
+		this.title = title;
+		this.author = author;
+		this.uuid = uuid;
+		this.randomPic = randomPic;
+		this.description = description;
+	}
 }
 
 class Booking {
@@ -26,6 +39,19 @@ class Booking {
 
 	constructor(private user: string) {
 		this.bookingDate = new Date();
-		this.returnDate = 
+		this.returnDate = new Date();
+		this.returnDate.setDate(this.bookingDate.getDate() + 7);
+		this.rentedBooks = [];
+		this.lateFee = 0;
+	}
+
+	rentBook(book: any): void {
+		this.rentedBooks.push(book);
+	}
+	returnBook(book: any): void {
+		const indexOfBook = this.rentedBooks.indexOf(book);
+		if (indexOfBook !== -1) {
+			this.rentedBooks.splice(indexOfBook, 1);
+		}
 	}
 }
