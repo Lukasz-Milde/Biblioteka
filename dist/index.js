@@ -21,11 +21,6 @@ class Book {
         this.uuid = uuid;
         this.randomPic = randomPic;
         this.description = description;
-        this.title = title;
-        this.author = author;
-        this.uuid = uuid;
-        this.randomPic = randomPic;
-        this.description = description;
     }
 }
 class Booking {
@@ -51,5 +46,26 @@ class Booking {
         if (indexOfBook !== -1) {
             this.rentedBooks.splice(indexOfBook, 1);
         }
+    }
+    returnCheck() {
+        const returnDate = new Date();
+        const returnDifference = returnDate.getDate() - this.returnDate.getDate();
+        const delayDays = Math.ceil(returnDifference / (1000 * 3600 * 24));
+        if (returnDifference > 0) {
+            this.lateFee = delayDays * this.FeePerDay;
+        }
+        return this.lateFee;
+    }
+    getBookingDate() {
+        return this.bookingDate;
+    }
+    getReturnDate() {
+        return this.returnDate;
+    }
+    getRentedBooks() {
+        return this.rentedBooks;
+    }
+    getLateFee() {
+        return this.lateFee;
     }
 }
