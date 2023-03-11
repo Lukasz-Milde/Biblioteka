@@ -1,8 +1,15 @@
-class User {
+interface UserType {
+	name: string;
+	surname: string;
+	uuid: string;
+	rentedBooks: BookType[];
+}
+class User implements UserType {
 	constructor(
-		private name: string,
-		private surname: string,
-		private uuid: string
+		public name: string,
+		public surname: string,
+		public uuid: string,
+		public rentedBooks: BookType[]
 	) {}
 }
 
@@ -39,10 +46,11 @@ class Booking {
 		this.lateFee = 0;
 	}
 
-	rentBook(book: any): void {
+	rentBook(book: BookType): void {
 		this.rentedBooks.push(book);
 	}
-	returnBook(book: any): void {
+
+	returnBook(book: BookType): void {
 		const indexOfBook = this.rentedBooks.indexOf(book);
 		if (indexOfBook !== -1) {
 			this.rentedBooks.splice(indexOfBook, 1);
@@ -67,11 +75,52 @@ class Booking {
 		return this.returnDate;
 	}
 
-	getRentedBooks(): BookType {
+	getRentedBooks(): BookType[] {
 		return this.rentedBooks;
 	}
 
 	getLateFee(): number {
 		return this.lateFee;
+	}
+}
+
+class Library {
+	constructor(
+		private listOfBooks: BookType[],
+		private availableBooks: BookType[],
+		private listOfBookings: any[],
+		private listOfUsers: UserType[]
+	) {}
+	addBookToLibrary(book: BookType): void {
+		this.listOfBooks.push(book);
+	}
+
+	removeBookFromLibrary(book: BookType): void {
+		const indexOfBook = this.availableBooks.indexOf(book);
+		if (indexOfBook !== -1) {
+			this.availableBooks.splice(indexOfBook, 1);
+		}
+	}
+
+	rentBookForUser(book: BookType, user: UserType) {
+		const indexOfBook = this.availableBooks.indexOf(book);
+		if (indexOfBook !== -1) {
+			user.rentedBooks.push(book);
+		}
+	}
+
+	returnBookFromUser(book: BookType, user: UserType) {
+		const indexOfBook = user.rentedBooks.indexOf(book);
+		if (indexOfBook !== -1) {
+			this.availableBooks.push(book);
+		}
+	}
+
+	getListOfBookings(): any[] {
+		return this.listOfBookings;
+	}
+
+	getListOfUsers(): UserType[] {
+		return this.listOfUsers;
 	}
 }
